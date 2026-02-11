@@ -35,6 +35,7 @@
 
   #yes { background-color: #ff4d6d; color: white; }
   #no { background-color: #ccc; }
+  #back { background-color: #6c63ff; color: white; display: none; }
 
   .memory {
     position: absolute;
@@ -73,10 +74,10 @@
 let noClicks = 0;
 let speed = 120;
 
+const card = document.getElementById('card');
 const yesBtn = document.getElementById('yes');
 const noBtn = document.getElementById('no');
 
-// 7 images now
 const memoryImages = [
   'memory1.jpg',
   'memory2.jpg',
@@ -88,9 +89,38 @@ const memoryImages = [
 ];
 
 yesBtn.onclick = function() {
-  document.body.innerHTML = `<h1 style="color:#e63946; margin-top:20px;">I love you ❤️</h1>`;
+  // Hide original card
+  card.style.display = 'none';
+
+  // Show love message
+  const loveMessage = document.createElement('h1');
+  loveMessage.innerText = 'I love you ❤️';
+  loveMessage.style.color = '#e63946';
+  loveMessage.style.marginTop = '20px';
+  loveMessage.id = 'loveMessage';
+  document.body.appendChild(loveMessage);
+
+  // Show memories
   launchConfetti();
   showMemories();
+
+  // Add Back button
+  const backBtn = document.createElement('button');
+  backBtn.id = 'back';
+  backBtn.innerText = 'Go Back 💌';
+  backBtn.style.position = 'absolute';
+  backBtn.style.top = '20px';
+  backBtn.style.right = '20px';
+  backBtn.style.zIndex = '20';
+  backBtn.style.display = 'block';
+  document.body.appendChild(backBtn);
+
+  backBtn.onclick = function() {
+    // Remove love message and memories
+    document.body.innerHTML = '';
+    document.body.appendChild(card);
+    card.style.display = 'block';
+  }
 }
 
 noBtn.onclick = function() {
